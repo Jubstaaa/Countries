@@ -11,8 +11,13 @@
             height: 120px;
         }
 
-        #neighbors .card{
+        #neighbors .card,#allCountries li{
             cursor: pointer;
+        }
+
+        #allCountries li:hover{
+            background-color: #0d6efd;
+            color:#fff;
         }
 
         #details{
@@ -22,8 +27,16 @@
         #loading{
             display: none;
         }
+        #allCountries li{
+            display:none;
+        }
+        #allCountries{
+            max-height: 206px;
+            overflow: scroll;
+        }
 
     </style>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <title>Countries</title>
 </head>
 <body>
@@ -34,12 +47,15 @@
         <div class="card mb-3">
             <div class="card-body">
                 <div class="input-group">
-                    <input type="text" id="txtSearch" class="form-control" placeholder="Enter Country Name" onKeyDown="enter(event)">
+                    <input type="text" id="txtSearch" name="txtSearch" autocomplete="off" class="form-control" placeholder="Enter Country Name" onKeyDown="enter(event)">
                     <button id="btnSearch" type="button" class="btn btn-primary">Load</button>
                     <button id="btnLocation" type="button" class="btn btn-danger">
                         <i class="fa-solid fa-location-crosshairs"></i>
                     </button>
                 </div>
+                <ul class="list-group" id="allCountries">
+                    
+                  </ul>
             </div>
         </div>
         <div id="loading" class="spinner-border" role="status">

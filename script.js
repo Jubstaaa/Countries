@@ -1,3 +1,5 @@
+getAll();
+
 function enter(event) {
     if (event.key == "Enter") {
         let text=document.querySelector("#txtSearch").value;
@@ -40,9 +42,32 @@ renderError(err);
 }
 
 
+async function getAll(){
+        const response3 = await fetch('https://restcountries.com/v3.1/all');
+        const allCountries = await response3.json();
+        var countries=[]
+        for(var x of allCountries){
+            countries.push(x.name.common);
+            countries.sort();   
+        }
+        for(var x of countries){
+      
+            let html=`
+            <li class="list-group-item" onclick='getCountry(this.innerText)'>${x}</li>
+            `
+            document.querySelector("#allCountries").insertAdjacentHTML("beforeend",html);
+
+        }
+     
+}
+
 async function getCountry(country){
+document.querySelector("#txtSearch").value=country;
 document.querySelector("#details").style.opacity=0;
 document.querySelector("#loading").style.display="block";
+for(let i=0;i<document.querySelectorAll("#allCountries li").length;i++){
+    document.querySelectorAll("#allCountries li")[i].style.display="none";
+}
 try {
         const response = await fetch('https://restcountries.com/v3.1/name/'+country);
         if(!response.ok)
@@ -134,3 +159,55 @@ document.querySelector("#errors").innerHTML = html ;
 document.querySelector("#loading").style.display="none";
 }
 
+// Search Box
+
+jQuery.expr[`:`].contains = function(a, i, m) {
+    return jQuery(a).text().toUpperCase()
+    .indexOf(m[3].toUpperCase()) >= 0;
+    };
+
+    $(document).ready( function () {
+    
+        $("#txtSearch").keyup(function(){
+         
+        var value = $("#txtSearch").val();
+           
+        if(value.length==0){
+         
+        $("#allCountries li").css("display","block");
+         
+        }else{
+         
+        $("#allCountries li").hide();
+        $("#allCountries li:contains("+value+")").css("display","block");
+         
+        }
+         
+        });
+
+        $("#txtSearch").focus(function(){
+         
+            var value = $("#txtSearch").val();
+               
+            if(value.length==0){
+             
+            $("#allCountries li").css("display","block");
+             
+            }else{
+             
+            $("#allCountries li").hide();
+            $("#allCountries li:contains("+value+")").css("display","block");
+             
+            }
+             
+            });
+         
+        });
+
+ document.addEventListener("click", (event) => {
+   const isClickInside = document.querySelector(".card-body").contains(event.target);
+ 
+   if (!isClickInside) {
+    $("#allCountries li").hide();
+   }
+ });
