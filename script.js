@@ -185,7 +185,7 @@ jQuery.expr[`:`].contains = function(a, i, m) {
          
         });
 
-        $("#txtSearch").focus(function(){
+        $("#txtSearch").click(function(){
          
             var value = $("#txtSearch").val();
                
